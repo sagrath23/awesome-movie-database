@@ -1,8 +1,8 @@
-class MovieRating {
+export class MovieRating {
   readonly vendor: string;
-  readonly rating: number;
+  readonly rating: string;
 
-  constructor(vendor: string, rating: number) {
+  constructor(vendor: string, rating: string) {
     this.vendor = vendor;
     this.rating = rating;
   }
@@ -18,15 +18,23 @@ export class Movie {
   readonly plot: string;
   readonly actors: Array<string>;
 
-  constructor(
-    id: string,
-    title: string,
-    releaseYear: string,
-    ratingList: Array<MovieRating>,
-    country: string,
-    language: string,
-    plot: string,
-  ) {
+  constructor({
+    id,
+    title,
+    releaseYear,
+    ratingList,
+    country,
+    language,
+    plot,
+  }: {
+    id: string;
+    title: string;
+    releaseYear: string;
+    ratingList: Array<MovieRating>;
+    country: string;
+    language: string;
+    plot: string;
+  }) {
     this.id = id;
     this.title = title;
     this.releaseYear = releaseYear;

@@ -1,10 +1,12 @@
-import { catchError, firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MoviesRepository } from '../../domain/port';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { OMDBResponse } from './omdb.response';
+import { fromPrimitives } from './omdb.transformer';
+import { Movie } from '../../domain/model';
 
 @Injectable()
 export class OMDBMoviesRepository implements MoviesRepository {
@@ -20,36 +22,42 @@ export class OMDBMoviesRepository implements MoviesRepository {
   }
 
   async getMovieByTitle(title: string) {
-    const { data } = await firstValueFrom(
+    const movie = await firstValueFrom(
       this.httpService
-        .get<OMDBResponse>(`${this.getBasePath()}&t=${title}`)
+        .get<AxiosResponse<OMDBResponse>>(`${this.getBasePath()}&t=${title}`)
         .pipe(
           catchError((error: AxiosError) => {
             console.log(error, 'OMDBMoviesRepository.getMovieByTitle');
 
             throw error;
           }),
+          // transform response to domain object
+          map<AxiosResponse<OMDBResponse>, Movie>(fromPrimitives),
         ),
     );
 
-    console.log(data, 'OMDBMoviesRepository.getMovieByTitle');
+    console.log(movie, 'OMDBMoviesRepository.getMovieByTitle');
 
-    return data;
+    return movie;
   }
 
   async getMovieById(id: string) {
-    const { data } = await firstValueFrom(
-      this.httpService.get<OMDBResponse>(`${this.getBasePath()}&i=${id}`).pipe(
-        catchError((error: AxiosError) => {
-          console.log(error, 'OMDBMoviesRepository.getMovieById');
+    const movie = await firstValueFrom(
+      this.httpService
+        .get<AxiosResponse<OMDBResponse>>(`${this.getBasePath()}&i=${id}`)
+        .pipe(
+          catchError((error: AxiosError) => {
+            console.log(error, 'OMDBMoviesRepository.getMovieById');
 
-          throw error;
-        }),
-      ),
+            throw error;
+          }),
+          // transform response to domain object
+          map<AxiosResponse<OMDBResponse>, Movie>(fromPrimitives),
+        ),
     );
 
-    console.log(data, 'OMDBMoviesRepository.getMovieById');
+    console.log(movie, 'OMDBMoviesRepository.getMovieById');
 
-    return data;
+    return movie;
   }
 }

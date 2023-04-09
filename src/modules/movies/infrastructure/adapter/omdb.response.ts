@@ -1,3 +1,8 @@
+interface OMDBRating {
+  Source: string;
+  Value: string;
+}
+
 export interface OMDBResponse {
   Title: string;
   Year: string;
@@ -13,7 +18,7 @@ export interface OMDBResponse {
   Country: string; // separated by comma
   Awards: string;
   Poster: string;
-  Ratings: Array<string>;
+  Ratings: Array<OMDBRating>;
   Metascore: string;
   imdbRating: string;
   imdbVotes: string;
