@@ -2,11 +2,11 @@ import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MoviesRepository } from '../../domain/port';
+import { MoviesRepository } from '../../../domain/port';
 import { AxiosError, AxiosResponse } from 'axios';
 import { OMDBResponse } from './omdb.response';
 import { fromPrimitives } from './omdb.transformer';
-import { Movie } from '../../domain/model';
+import { Movie } from '../../../domain/model';
 
 @Injectable()
 export class OMDBMoviesRepository implements MoviesRepository {
