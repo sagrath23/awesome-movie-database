@@ -12,6 +12,8 @@ export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
     Ratings,
   } = data;
 
+  console.log(title, 'transformer');
+
   return new Movie({
     id,
     title,

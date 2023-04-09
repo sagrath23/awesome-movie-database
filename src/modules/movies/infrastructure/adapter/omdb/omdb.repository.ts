@@ -22,6 +22,7 @@ export class OMDBMoviesRepository implements MoviesRepository {
   }
 
   async getMovieByTitle(title: string) {
+    console.log(title, 'here');
     const movie = await firstValueFrom(
       this.httpService
         .get<AxiosResponse<OMDBResponse>>(`${this.getBasePath()}&t=${title}`)
