@@ -1,1 +1,1 @@
-export * from './omdb.repository';
+export * from './omdb';

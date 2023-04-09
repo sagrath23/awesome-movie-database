@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Movie, MovieRating } from '../../domain/model';
+import { Movie, MovieRating } from '../../../domain/model';
 
 export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
   const {

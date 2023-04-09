@@ -60,3 +60,4 @@ $ yarn run test:cov
 - [ ] Add setup step to save API Key before use the CLI
 - [ ] Add Unit tests 
 - [ ] Add Github actions to run tests & deploy web service and/or publish npm package.
+- [ ] Add support for IMDB API
