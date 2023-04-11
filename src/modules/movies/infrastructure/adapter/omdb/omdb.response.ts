@@ -4,13 +4,13 @@ interface OMDBRating {
 }
 
 export interface OMDBResponse {
-  imdbID: string;
-  Title: string;
-  Released: string;
-  Country: string; // separated by comma
-  Language: string;
-  Plot: string;
-  Ratings: Array<OMDBRating>;
+  imdbID?: string;
+  Title?: string;
+  Released?: string;
+  Country?: string; // separated by comma
+  Language?: string;
+  Plot?: string;
+  Ratings?: Array<OMDBRating>;
   Year?: string;
   Rated?: string;
   Runtime?: string;
@@ -28,6 +28,6 @@ export interface OMDBResponse {
   BoxOffice?: string;
   Production?: string;
   Website?: string;
-  Response?: string;
+  Response: string;
   Error?: string;
 }

@@ -22,7 +22,7 @@ export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
     title,
     releaseYear,
     ratingList:
-      Ratings?.map(({ Source, Value }) => new MovieRating(Source, Value)) ?? [],
+      Ratings.map(({ Source, Value }) => new MovieRating(Source, Value)) ?? [],
     country,
     language,
     plot,

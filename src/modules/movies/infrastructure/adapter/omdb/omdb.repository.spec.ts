@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 import { OMDBMoviesRepository } from './omdb.repository';
 import { MoviesRepository } from '../../../domain/port';
-import { Movie } from '../../../domain/model';
+import { Movie, MovieNotFoundError } from '../../../domain/model';
 import { OMDBResponse } from './omdb.response';
 
 describe('OMDBMoviesRepository', () => {
@@ -26,6 +26,7 @@ describe('OMDBMoviesRepository', () => {
       Language: 'language',
       Plot: 'plot',
       Ratings: [],
+      Response: 'True',
     },
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -80,6 +81,26 @@ describe('OMDBMoviesRepository', () => {
       const response = await omdbMoviesRepository.getMovieById('movie-id');
 
       expect(response).toBeInstanceOf(Movie);
+    });
+  });
+
+  describe('when OMDB API returns an error', () => {
+    beforeEach(() => {
+      jest.spyOn(configService, 'get').mockImplementation(() => 'mocked_key');
+      jest.spyOn(httpService, 'get').mockImplementationOnce(() =>
+        of<AxiosResponse<OMDBResponse>>({
+          ...mockedResponse,
+          data: { Response: 'False', Error: 'custom-error' },
+        }),
+      );
+    });
+
+    it('should raise an exception', async () => {
+      try {
+        await omdbMoviesRepository.getMovieByTitle('Fooo');
+      } catch (error) {
+        expect(error).toBeInstanceOf(MovieNotFoundError);
+      }
     });
   });
 });
