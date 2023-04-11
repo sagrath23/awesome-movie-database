@@ -10,6 +10,7 @@ export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
     Language: language,
     Plot: plot,
     Ratings,
+    Actors,
     Response,
   } = data;
 
@@ -26,5 +27,6 @@ export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
     country,
     language,
     plot,
+    actors: Actors.split(','),
   });
 };

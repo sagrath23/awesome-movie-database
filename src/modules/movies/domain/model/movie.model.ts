@@ -16,6 +16,7 @@ export class Movie {
   readonly country: string;
   readonly language: string;
   readonly plot: string;
+  readonly actors: Array<string>;
 
   constructor({
     id,
@@ -25,6 +26,7 @@ export class Movie {
     country,
     language,
     plot,
+    actors,
   }: {
     id: string;
     title: string;
@@ -33,6 +35,7 @@ export class Movie {
     country: string;
     language: string;
     plot: string;
+    actors: Array<string>;
   }) {
     this.id = id;
     this.title = title;
@@ -41,5 +44,6 @@ export class Movie {
     this.country = country;
     this.language = language;
     this.plot = plot;
+    this.actors = actors;
   }
 }

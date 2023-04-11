@@ -10,6 +10,7 @@ export class MovieBuilder {
   private static readonly PLOT =
     'A mocked plot for our mocked movie released on a mocked date';
   private static readonly RATINGS = [new MovieRating('mocked-vendor', '5/5')];
+  private static readonly ACTORS = ['mocked actor # 1', 'mocked actor # 2'];
 
   private readonly id: string;
   private readonly title: string;
@@ -18,6 +19,7 @@ export class MovieBuilder {
   private readonly country: string;
   private readonly language: string;
   private readonly plot: string;
+  private readonly actors: Array<string>;
 
   constructor() {
     this.id = MovieBuilder.ID;
@@ -27,6 +29,7 @@ export class MovieBuilder {
     this.country = MovieBuilder.COUNTRY;
     this.language = MovieBuilder.LANGUAGE;
     this.plot = MovieBuilder.PLOT;
+    this.actors = MovieBuilder.ACTORS;
   }
 
   static aMovieBuilder() {
@@ -42,6 +45,7 @@ export class MovieBuilder {
       country: this.country,
       language: this.language,
       plot: this.plot,
+      actors: this.actors,
     });
   }
 }

@@ -26,6 +26,7 @@ describe('OMDBMoviesRepository', () => {
       Language: 'language',
       Plot: 'plot',
       Ratings: [],
+      Actors: 'mocked actor # 1, mocked actor # 2',
       Response: 'True',
     },
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
