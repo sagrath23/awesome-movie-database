@@ -5,6 +5,7 @@ import { MoviesController } from './infrastructure/controller';
 import { OMDBMoviesRepository } from './infrastructure/adapter/omdb';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from './application';
 import { MoviesCommand } from './infrastructure/command';
+import { FindMoviesSubCommand } from './infrastructure/command/findMovie.subcommand';
 
 @Module({
   imports: [HttpModule, ConfigModule],
@@ -17,6 +18,7 @@ import { MoviesCommand } from './infrastructure/command';
     GetMovieByIdUsecase,
     GetMovieByTitleUsecase,
     MoviesCommand,
+    FindMoviesSubCommand,
   ],
 })
 export class MoviesModule {}

@@ -25,10 +25,10 @@ $ yarn build
 $ node ./dist/main.js amdb -h
 
 # get movie by id
-$ node ./dist/main.js amdb -i tt6718170
+$ node ./dist/main.js amdb find -i tt6718170
 
 # get movie by title
-$ node ./dist/main.js amdb -t "Super Mario Bros"
+$ node ./dist/main.js amdb find -t "Super Mario Bros"
 ```
 
 ### Running as a web server

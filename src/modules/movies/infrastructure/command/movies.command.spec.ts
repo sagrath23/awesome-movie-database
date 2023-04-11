@@ -52,7 +52,12 @@ describe('Task Command', () => {
     it('should call the command using id option', async () => {
       const consoleSpy = jest.spyOn(console, 'log');
 
-      await CommandTestFactory.run(commandInstance, ['amdb', '-i', 'movie-id']);
+      await CommandTestFactory.run(commandInstance, [
+        'amdb',
+        'find',
+        '-i',
+        'movie-id',
+      ]);
 
       expect(consoleSpy).toBeCalledWith(
         JSON.stringify(MovieBuilder.aMovieBuilder().build()),
@@ -70,7 +75,12 @@ describe('Task Command', () => {
     it('should call the command using id option', async () => {
       const consoleSpy = jest.spyOn(console, 'log');
 
-      await CommandTestFactory.run(commandInstance, ['amdb', '-t', 'movie-id']);
+      await CommandTestFactory.run(commandInstance, [
+        'amdb',
+        'find',
+        '-t',
+        'movie-id',
+      ]);
 
       expect(consoleSpy).toBeCalledWith(
         JSON.stringify(MovieBuilder.aMovieBuilder().build()),
