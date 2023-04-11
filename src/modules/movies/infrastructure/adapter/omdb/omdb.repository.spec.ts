@@ -34,6 +34,15 @@ describe('OMDBMoviesRepository', () => {
     statusText: '',
   };
 
+  const mockDependencies = () => {
+    jest.spyOn(configService, 'get').mockImplementation(() => 'mocked_key');
+    jest
+      .spyOn(httpService, 'get')
+      .mockImplementationOnce(() =>
+        of<AxiosResponse<OMDBResponse>>(mockedResponse),
+      );
+  };
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [ConfigModule],
@@ -55,17 +64,20 @@ describe('OMDBMoviesRepository', () => {
   });
 
   describe('getMovieByTitle', () => {
-    beforeEach(() => {
-      jest.spyOn(configService, 'get').mockImplementation(() => 'mocked_key');
-      jest
-        .spyOn(httpService, 'get')
-        .mockImplementationOnce(() =>
-          of<AxiosResponse<OMDBResponse>>(mockedResponse),
-        );
-    });
+    beforeEach(mockDependencies);
 
     it('should return a Movie instance', async () => {
       const response = await omdbMoviesRepository.getMovieByTitle('Fooo');
+
+      expect(response).toBeInstanceOf(Movie);
+    });
+  });
+
+  describe('getMovieById', () => {
+    beforeEach(mockDependencies);
+
+    it('should return a Movie instance', async () => {
+      const response = await omdbMoviesRepository.getMovieById('movie-id');
 
       expect(response).toBeInstanceOf(Movie);
     });

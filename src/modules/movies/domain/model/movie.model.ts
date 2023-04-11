@@ -16,7 +16,6 @@ export class Movie {
   readonly country: string;
   readonly language: string;
   readonly plot: string;
-  readonly actors: Array<string>;
 
   constructor({
     id,

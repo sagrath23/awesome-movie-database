@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Movie, MovieRating } from '../../../domain/model';
+import { Movie, MovieNotFoundError, MovieRating } from '../../../domain/model';
 
 export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
   const {
@@ -10,9 +10,12 @@ export const fromPrimitives = ({ data }: AxiosResponse): Movie => {
     Language: language,
     Plot: plot,
     Ratings,
+    Response,
   } = data;
 
-  console.log(title, 'transformer');
+  if (Response === 'False') {
+    throw new MovieNotFoundError();
+  }
 
   return new Movie({
     id,

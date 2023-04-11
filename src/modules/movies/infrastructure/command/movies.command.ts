@@ -1,6 +1,7 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { Logger } from '@nestjs/common';
+import { DefaultMoviesModuleError } from '../../domain/model';
 
 interface BasicCommandOptions {
   title?: string;
@@ -11,7 +12,7 @@ interface BasicCommandOptions {
   name: 'amdb',
   description: 'A CLI utitly to get info about any movie',
 })
-export class BasicCommand extends CommandRunner {
+export class MoviesCommand extends CommandRunner {
   constructor(
     private readonly getMovieByIdUsecase: GetMovieByIdUsecase,
     private readonly getMovieByTitleUsecase: GetMovieByTitleUsecase,
@@ -26,17 +27,20 @@ export class BasicCommand extends CommandRunner {
     const argument = options?.id ?? options?.title;
 
     if (!argument) {
-      // TODO: raise an exception here
-      Logger.error('No valid argument provided');
+      Logger.error('No valid argument provided', 'MoviesCommand.run');
 
-      throw new Error();
+      throw new DefaultMoviesModuleError('invalid arguments');
     }
 
     const useCase = options?.id
       ? this.getMovieByIdUsecase
       : this.getMovieByTitleUsecase;
 
-    await useCase.execute(argument);
+    const result = await useCase.execute(argument);
+
+    Logger.debug(result, 'MoviesCommand.run');
+
+    console.log(JSON.stringify(result));
   }
 
   @Option({

@@ -13,6 +13,7 @@ async function bootstrap() {
   // TODO: look how to get env var set in CLI here
   if (shouldRunAsCLI) {
     Logger.log('Running in CLI mode...');
+    // TODO: enable debug mode w/ env vars
     await CommandFactory.run(MoviesModule, ['log', 'warn', 'error']);
 
     return 0;

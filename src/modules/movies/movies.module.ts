@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MoviesController } from './infrastructure/controller';
 import { OMDBMoviesRepository } from './infrastructure/adapter/omdb';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from './application';
-import { BasicCommand } from './infrastructure/command';
+import { MoviesCommand } from './infrastructure/command';
 
 @Module({
   imports: [HttpModule, ConfigModule],
@@ -16,7 +16,7 @@ import { BasicCommand } from './infrastructure/command';
     },
     GetMovieByIdUsecase,
     GetMovieByTitleUsecase,
-    BasicCommand,
+    MoviesCommand,
   ],
 })
 export class MoviesModule {}

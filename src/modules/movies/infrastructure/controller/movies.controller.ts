@@ -10,7 +10,7 @@ export class MoviesController {
 
   @Version('1')
   @Get(':id')
-  async getMovieById(@Param() { id }) {
+  async getMovieById(@Param('id') id) {
     return this.getMovieByIdUsecase.execute(id);
   }
 
