@@ -8,10 +8,12 @@ import { OMDBMoviesRepository } from './omdb.repository';
 import { MoviesRepository } from '../../../domain/port';
 import { Movie, MovieNotFoundError } from '../../../domain/model';
 import { OMDBResponse } from './omdb.response';
+import { KeyringService } from '../../keyring';
 
 describe('OMDBMoviesRepository', () => {
   let httpService: DeepMocked<HttpService>;
   let configService: ConfigService;
+  let keyringService: KeyringService;
   let omdbMoviesRepository: MoviesRepository;
 
   const mockedResponse: AxiosResponse<
@@ -37,12 +39,13 @@ describe('OMDBMoviesRepository', () => {
   };
 
   const mockDependencies = () => {
-    jest.spyOn(configService, 'get').mockImplementation(() => 'mocked_key');
+    jest.spyOn(configService, 'get').mockImplementation(() => undefined);
     jest
       .spyOn(httpService, 'get')
       .mockImplementationOnce(() =>
         of<AxiosResponse<OMDBResponse>>(mockedResponse),
       );
+    jest.spyOn(keyringService, 'getToken').mockResolvedValue('an-api-token');
   };
 
   beforeEach(async () => {
@@ -57,11 +60,16 @@ describe('OMDBMoviesRepository', () => {
           provide: HttpService,
           useValue: createMock<HttpService>(),
         },
+        {
+          provide: KeyringService,
+          useValue: createMock<KeyringService>(),
+        },
       ],
     }).compile();
 
     httpService = moduleRef.get(HttpService);
     configService = moduleRef.get<ConfigService>(ConfigService);
+    keyringService = moduleRef.get<KeyringService>(KeyringService);
     omdbMoviesRepository = moduleRef.get<MoviesRepository>('MoviesRepository');
   });
 

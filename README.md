@@ -24,6 +24,9 @@ $ yarn build
 # check available options to use the command
 $ node ./dist/main.js amdb -h
 
+# use command without .env file
+$ node ./dist/main.js amdb setup [OMDBToken]
+
 # get movie by id
 $ node ./dist/main.js amdb find -i tt6718170
 
@@ -56,9 +59,9 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Pending work
-- [ ] Add Unit tests 
-- [ ] Add Error Handling
-- [ ] Add setup step to save API Key before use the CLI
+## Next Steps
+- [X] Add Unit tests 
+- [X] Add Error Handling
+- [X] Add setup step to save API Key before use the CLI
 - [ ] Add Github actions to run tests & deploy web service and/or publish npm package.
 - [ ] Add support for IMDB API

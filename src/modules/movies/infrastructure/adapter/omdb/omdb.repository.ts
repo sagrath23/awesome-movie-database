@@ -30,7 +30,7 @@ export class OMDBMoviesRepository implements MoviesRepository {
       throw new DefaultMoviesModuleError('No OMDB API Key provided');
     }
 
-    return `${this.configService.get<string>('OMDB_URL')}?apikey=${omdbAPIKey}`;
+    return `http://www.omdbapi.com?apikey=${omdbAPIKey}`;
   }
 
   async getMovieByTitle(title: string) {
