@@ -6,7 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build && cp .env dist/.env",
+    "build:env": "nest build && cp .env dist/.env",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:command": "EXEC_MODE=cli && nest start",
     "start": "nest start",

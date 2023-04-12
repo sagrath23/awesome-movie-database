@@ -22,9 +22,9 @@ async function bootstrap() {
 }
 
 async function bootstrapCLI() {
-  const enableDebug = process.env.ENABLE_DEBUG === 'true';
+  const enableDebug = process.env.ENABLE_DEBUG == 'true';
 
-  if (true) {
+  if (enableDebug) {
     await CommandFactory.run(MoviesModule, ['log', 'warn', 'error']);
   } else {
     await CommandFactory.run(MoviesModule, []);
