@@ -2,10 +2,12 @@ import { SubCommand, CommandRunner, Option } from 'nest-commander';
 import { Logger } from '@nestjs/common';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { DefaultMoviesModuleError } from '../../domain/model';
+import { fluentFormat } from '../format';
 
 interface FindMovieSubCommandOptions {
   title?: string;
   id?: string;
+  format?: string;
 }
 
 @SubCommand({
@@ -41,7 +43,9 @@ export class FindMoviesSubCommand extends CommandRunner {
     Logger.debug(result, 'FindMoviesSubCommand.run');
 
     // TODO: add format option to parse output nicely
-    console.log(JSON.stringify(result));
+    const formatter =
+      options?.format === 'json' ? JSON.stringify : fluentFormat;
+    console.log(formatter(result));
   }
 
   @Option({
@@ -57,6 +61,14 @@ export class FindMoviesSubCommand extends CommandRunner {
     description: `Movie's ID`,
   })
   parseId(val: string): string {
+    return val;
+  }
+
+  @Option({
+    flags: '-f, --format [string]',
+    description: `Output format (fluent or json)`,
+  })
+  parseFormat(val: string): string {
     return val;
   }
 }

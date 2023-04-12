@@ -32,6 +32,9 @@ $ node ./dist/main.js amdb find -i tt6718170
 
 # get movie by title
 $ node ./dist/main.js amdb find -t "Super Mario Bros"
+
+# print output in JSON 
+$ node ./dist/main.js amdb find -t "Super Mario Bros" -f json
 ```
 
 ### Running as a web server
