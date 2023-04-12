@@ -1,8 +1,9 @@
-import { Command, CommandRunner, Option } from 'nest-commander';
+import { Command, CommandRunner } from 'nest-commander';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { Logger } from '@nestjs/common';
 import { DefaultMoviesModuleError } from '../../domain/model';
 import { FindMoviesSubCommand } from './findMovie.subcommand';
+import { SetupSubCommand } from './setup.subCommand';
 
 interface BasicCommandOptions {
   title?: string;
@@ -11,7 +12,7 @@ interface BasicCommandOptions {
 
 @Command({
   name: 'amdb',
-  subCommands: [FindMoviesSubCommand],
+  subCommands: [FindMoviesSubCommand, SetupSubCommand],
   description: 'A CLI utitly to get info about any movie',
 })
 export class MoviesCommand extends CommandRunner {
@@ -28,9 +29,6 @@ export class MoviesCommand extends CommandRunner {
   ): Promise<void> {
     const argument = options?.id ?? options?.title;
 
-    console.log(passedParam, 'params command');
-    console.log(options, 'options command');
-
     if (!argument) {
       Logger.error('No valid argument provided', 'MoviesCommand.run');
 
@@ -45,6 +43,6 @@ export class MoviesCommand extends CommandRunner {
 
     Logger.debug(result, 'MoviesCommand.run');
 
-    console.log(JSON.stringify(result), 'baz');
+    console.log(JSON.stringify(result));
   }
 }

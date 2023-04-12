@@ -5,20 +5,22 @@ import { MoviesController } from './infrastructure/controller';
 import { OMDBMoviesRepository } from './infrastructure/adapter/omdb';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from './application';
 import { MoviesCommand } from './infrastructure/command';
-import { FindMoviesSubCommand } from './infrastructure/command/findMovie.subcommand';
+import { KeyringService } from './infrastructure/keyring';
+import { SetupQuestions } from './infrastructure/command/setup.taskQuestions';
 
 @Module({
   imports: [HttpModule, ConfigModule],
   controllers: [MoviesController],
   providers: [
+    KeyringService,
     {
       provide: 'MoviesRepository',
       useClass: OMDBMoviesRepository,
     },
     GetMovieByIdUsecase,
     GetMovieByTitleUsecase,
-    MoviesCommand,
-    FindMoviesSubCommand,
+    SetupQuestions,
+    ...MoviesCommand.registerWithSubCommands(),
   ],
 })
 export class MoviesModule {}

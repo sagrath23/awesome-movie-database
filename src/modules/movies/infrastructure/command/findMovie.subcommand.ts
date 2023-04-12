@@ -1,6 +1,6 @@
 import { SubCommand, CommandRunner, Option } from 'nest-commander';
-import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { Logger } from '@nestjs/common';
+import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { DefaultMoviesModuleError } from '../../domain/model';
 
 interface FindMovieSubCommandOptions {
@@ -26,9 +26,6 @@ export class FindMoviesSubCommand extends CommandRunner {
   ): Promise<void> {
     const argument = options?.id ?? options?.title;
 
-    console.info(passedParam, 'params subcommand');
-    console.info(options, 'options subcommand');
-
     if (!argument) {
       Logger.error('No valid argument provided', 'FindMoviesSubCommand.run');
 
@@ -43,6 +40,7 @@ export class FindMoviesSubCommand extends CommandRunner {
 
     Logger.debug(result, 'FindMoviesSubCommand.run');
 
+    // TODO: add format option to parse output nicely
     console.log(JSON.stringify(result));
   }
 
