@@ -5,6 +5,7 @@ import { MoviesRepository } from '../../domain/port';
 import { MoviesModule } from '../../movies.module';
 import { GetMovieByIdUsecase, GetMovieByTitleUsecase } from '../../application';
 import { MovieBuilder, DefaultMoviesModuleError } from '../../domain/model';
+import { fluentFormat } from '../format';
 
 describe('Task Command', () => {
   let commandInstance: TestingModule;
@@ -59,9 +60,24 @@ describe('Task Command', () => {
         'movie-id',
       ]);
 
-      expect(consoleSpy).toBeCalledWith(
-        JSON.stringify(MovieBuilder.aMovieBuilder().build()),
-      );
+      expect(consoleSpy).toBeCalledWith(fluentFormat(MovieBuilder.aMovieBuilder().build()));
+    });
+
+    describe('when "-f json" option is passed', () => {
+      it('should return response in JSON format', async () => {
+        const consoleSpy = jest.spyOn(console, 'log');
+
+        await CommandTestFactory.run(commandInstance, [
+          'amdb',
+          'find',
+          '-i',
+          'movie-id',
+          '-f',
+          'json'
+        ]);
+
+        expect(consoleSpy).toBeCalledWith(JSON.stringify(MovieBuilder.aMovieBuilder().build()));
+      });
     });
   });
 
@@ -72,19 +88,36 @@ describe('Task Command', () => {
         .mockImplementation(() => MovieBuilder.aMovieBuilder().build());
     });
 
-    it('should call the command using id option', async () => {
+    it('should call the command using title option', async () => {
       const consoleSpy = jest.spyOn(console, 'log');
 
       await CommandTestFactory.run(commandInstance, [
         'amdb',
         'find',
         '-t',
-        'movie-id',
+        'movie-title',
+        '-f',
+        'fluent',
       ]);
 
-      expect(consoleSpy).toBeCalledWith(
-        JSON.stringify(MovieBuilder.aMovieBuilder().build()),
-      );
+      expect(consoleSpy).toBeCalledWith(fluentFormat(MovieBuilder.aMovieBuilder().build()));
+    });
+
+    describe('when "-f json" option is passed', () => {
+      it('should return response in JSON format', async () => {
+        const consoleSpy = jest.spyOn(console, 'log');
+
+        await CommandTestFactory.run(commandInstance, [
+          'amdb',
+          'find',
+          '-t',
+          'movie-title',
+          '-f',
+          'json'
+        ]);
+
+        expect(consoleSpy).toBeCalledWith(JSON.stringify(MovieBuilder.aMovieBuilder().build()));
+      });
     });
   });
 });
